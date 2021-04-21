@@ -3,6 +3,7 @@ project(Lu_Compiler)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# identify the platform
 message(STATUS "operation system is ${CMAKE_SYSTEM_NAME}")
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
   set(Win_ 1)
@@ -12,9 +13,13 @@ endif()
 configure_file(configure.h.in ${CMAKE_CURRENT_BINARY_DIR}/generate/configure.h)
 
 add_subdirectory(platform)
-add_subdirectory(third_part)
-file(GLOB SOURCE_FILES src/*.cc)
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake")
+include(CLI11)
+include(SPDLOG)
+
+file(GLOB SOURCE_FILES "src/*.cc")
 add_executable(jcc ${SOURCE_FILES})
-target_include_directories(jcc PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/third_part/CLI11-src/include
-                               PRIVATE include)
+target_include_directories(jcc PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/CLI11-src/include
+                               PRIVATE include
+                               PRIVATE ${CMAKE_CURRENT_BINARY_DIR/spdlog-src/include})
 target_link_libraries(jcc PRIVATE platform)
