@@ -19,7 +19,8 @@ include(SPDLOG)
 
 file(GLOB SOURCE_FILES "src/*.cc")
 add_executable(jcc ${SOURCE_FILES})
-target_include_directories(jcc PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/CLI11-src/include
-                               PRIVATE include
-                               PRIVATE ${CMAKE_CURRENT_BINARY_DIR/spdlog-src/include})
-target_link_libraries(jcc PRIVATE platform)
+target_include_directories(jcc PRIVATE include
+                               PRIVATE ${PROJECT_BINARY_DIR}/CLI11-src/include
+                               PRIVATE ${PROJECT_BINARY_DIR}/spdlog-src/include)
+target_link_libraries(jcc PRIVATE platform 
+                          PRIVATE ${SPDLOG_PATH})

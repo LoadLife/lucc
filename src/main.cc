@@ -1,11 +1,13 @@
 #include <iostream>
 #include <regex>
 #include <string>
+#include "file_operation.h"
+#include "jcc.h"
 #include "CLI/App.hpp"
 #include "CLI/Formatter.hpp"
 #include "CLI/Config.hpp"
-#include "file_operation.h"
-#include "jcc.h"
+#include "spdlog/spdlog.h"
+
 
 #define version_info  "  jcc version '0.0.1'\n\
   a toy compiler\n\
@@ -22,7 +24,7 @@ int main(int argc, char** argv) {
   app.add_option("-I", include_pathes, "Source files path");
   // parse args 
   CLI11_PARSE(app, argc, argv);
-
+  
   if(version) {
     std::cout << version_info << std::endl;
     exit(0);
