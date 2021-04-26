@@ -21,13 +21,13 @@ int main(int argc, char** argv) {
   std::vector<std::string> include_pathes;
   app.add_option("-I", include_pathes, "Source files path");
   CLI11_PARSE(app, argc, argv);
-  
+
   if(version) {
     std::cout << version_info << std::endl;
     exit(0);
   }
-
-  auto jcc = Jcc::GetJcc(); 
+  spdlog::info("Start to get jcc instance");
+  auto jcc = jcc::Jcc::GetJcc(); 
   jcc->SetIncludePathes(include_pathes);
   return 0;
 

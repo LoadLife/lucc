@@ -1,4 +1,5 @@
 #include "jcc.h"
+namespace jcc{
 
 void Jcc::Init() {
   std::call_once(init_flag_, &Jcc::InitInternal, this);
@@ -13,5 +14,7 @@ void Jcc::SetSrcFiles(std::vector<std::string>& src_files) {
 }
 
 void Jcc::InitInternal() {
+
+}
 
 }

@@ -3,6 +3,7 @@
 #include <mutex>
 #include <string>
 #include <vector>
+namespace jcc{
 
 class Jcc {
  public:
@@ -22,4 +23,5 @@ class Jcc {
   std::vector<std::string> src_files_;
 };
 
+} //namespace jcc
 #endif // JCC_H_
