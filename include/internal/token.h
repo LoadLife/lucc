@@ -2,20 +2,34 @@
 #define TOKEN_H_
 #include <unordered_map> 
 #include <vector>
+#include <variant>
+#include "c_types.h"
 
 namespace jcc {
 
-struct token {
-  std::string token_name = "hello world";
-  uint64_t token_index;
+using Lexical_Desc = std::variant<int, double, std::string>;
+
+struct lexical_unit {
+  Lexical_Desc desc;
+  uint64_t lex_id;
+};
+
+class token_table {
+ public:
+  token_table() = default; 
+  struct item {
+    value_type type;
+    std::string value;
+  };
+ private:
+  std::vector<item> items_;
 };
 
 class grammar {
  public:
 
  private:
-  std::unordered_map<std::string, std::vector<std::string>> generated_exprs;
-
+  std::unordered_map<std::string,int> generated_exprs_;
 };
 
 
