@@ -7,7 +7,7 @@
 #include "CLI/Formatter.hpp"
 #include "CLI/Config.hpp"
 #include "spdlog/spdlog.h"
-#include "internal/token.h"
+#include "internal/lex.h"
 
 #define version_info  "  jcc version '0.0.1'\n\
   a toy compiler\n\
@@ -30,7 +30,6 @@ int main(int argc, char** argv) {
   spdlog::info("Start to get jcc instance");
   auto jcc = Jcc::GetJcc(); 
   jcc->SetIncludePathes(include_pathes);
-  std::cout << sizeof(token);
   return 0;
 
 }

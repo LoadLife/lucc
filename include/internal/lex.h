@@ -18,7 +18,7 @@ class token_table {
  public:
   token_table() = default; 
   struct item {
-    value_type type;
+    base_type type;
     std::string value;
   };
  private:

@@ -2,7 +2,7 @@
 #define C_TYPES_H_
 namespace jcc {
 
-enum value_type {
+enum base_type {
   SHORT = 0,
   INT,
   LONG,
