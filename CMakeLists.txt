@@ -16,7 +16,8 @@ add_subdirectory(platform)
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake")
 include(CLI11)
 include(SPDLOG)
-file(GLOB SOURCE_FILES "src/*.cc")
+file(GLOB SOURCE_FILES "src/*.cc"
+                       "src/internal/*.cc")
 add_executable(jcc ${SOURCE_FILES})
 target_include_directories(jcc PRIVATE include
                                PRIVATE ${PROJECT_BINARY_DIR}/CLI11-src/include
