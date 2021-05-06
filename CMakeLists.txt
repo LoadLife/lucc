@@ -19,7 +19,8 @@ include(SPDLOG)
 file(GLOB SOURCE_FILES "src/*.cc"
                        "src/internal/*.cc")
 add_executable(jcc ${SOURCE_FILES})
-target_include_directories(jcc PRIVATE include
+target_include_directories(jcc PRIVATE src
+                               PRIVATE utility
                                PRIVATE ${PROJECT_BINARY_DIR}/CLI11-src/include
                                PRIVATE ${PROJECT_BINARY_DIR}/spdlog-src/include)
 target_link_libraries(jcc PRIVATE platform 

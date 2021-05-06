@@ -7,7 +7,7 @@
 #include "CLI/Formatter.hpp"
 #include "CLI/Config.hpp"
 #include "spdlog/spdlog.h"
-#include "internal/lex.h"
+#include "internal/scan.h"
 
 #define version_info  "  jcc version '0.0.1'\n\
   a toy compiler\n\
