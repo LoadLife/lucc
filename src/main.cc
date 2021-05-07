@@ -30,6 +30,6 @@ int main(int argc, char** argv) {
   spdlog::info("Start to get jcc instance");
   auto jcc = Jcc::GetJcc(); 
   jcc->SetIncludePathes(include_pathes);
-  return 0;
 
+  return 0;
 }
