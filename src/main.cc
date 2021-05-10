@@ -30,6 +30,10 @@ int main(int argc, char** argv) {
   spdlog::info("Start to get jcc instance");
   auto jcc = Jcc::GetJcc(); 
   jcc->SetIncludePathes(include_pathes);
+  Token* a = new Number(3.14);
+  Token* b = new Number(2);
 
+  std::cout << a->to_string() << std::endl;
+  std::cout << b->to_string() << std::endl;
   return 0;
 }

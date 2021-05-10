@@ -1,9 +1,10 @@
 #ifndef SCAN_H_
 #define SCAN_H_
-#include <unordered_map> 
+#include <regex>
 #include <shared_mutex>
 #include <string>
 #include <type_traits>
+#include <unordered_map> 
 #include <vector>
 #include <variant>
 #include "c_types.h"
@@ -33,18 +34,7 @@ class Number : public Token {
     value_(std::move(value)){
   }
 
-  std::string to_string() override {
-    std::string str;
-    std::visit([&str](auto& value) {
-      if( std::is_same<double&, decltype(value)>() ) { 
-        str = "DOUBLE_" + std::to_string(value);
-      } else if( std::is_same<int&, decltype(value)>() ) {
-        str = "INT_" + std::to_string(value);
-      }
-    }, value_);
-    return str;
-  }
-  
+  std::string to_string() override;  
   std::variant<int, double> value_;
 };
 
@@ -59,6 +49,19 @@ class Word : public Token {
   }
 
   std::string lexeme_;
+};
+
+// ----------------------------------------------------------------------------
+class identifier_pattern {
+ public:
+  identifier_pattern(const std::initializer_list<std::string>& patterns) {
+    for(auto& item : patterns) 
+      patterns_.emplace_back(item);
+  }
+
+  bool match(std::string str);
+ private:
+  std::vector<std::regex> patterns_;
 };
 
 } // namespace jcc

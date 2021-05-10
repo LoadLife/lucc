@@ -4,6 +4,6 @@
 #include <vector>
 #include "configure.h"
 
-unsigned getFilesPathes(std::string folder_path, std::vector<std::string>& pathes);
+unsigned getFilesPathes(const std::string folder_path, std::vector<std::string>& pathes);
 
 #endif // FILE_OP_H_
