@@ -1,7 +1,6 @@
 #ifndef J_UTILITY_H_
 #define J_UTILITY_H_
 #include <fstream>
-#include <regex>
 #include <string>
 #include "spdlog/spdlog.h"
 

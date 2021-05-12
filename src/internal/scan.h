@@ -1,5 +1,6 @@
 #ifndef SCAN_H_
 #define SCAN_H_
+#include <map>
 #include <regex>
 #include <shared_mutex>
 #include <string>
@@ -8,11 +9,14 @@
 #include <vector>
 #include <variant>
 #include "c_types.h"
+#include "spdlog/spdlog.h"
 
 namespace jcc {
 // use to mark keywords
-enum Tag {
-  NUMBER = 256,  
+enum Tag : unsigned short {
+  NUMBER = 0,
+  IDENTIFIER,
+  KEYWORD,  
 };
 
 class Token {
@@ -22,6 +26,10 @@ class Token {
 
   virtual std::string to_string() {
     return std::to_string(tag_);
+  }
+
+  Tag get_token_tag() {
+    return static_cast<Tag>(tag_);
   }
 
   const int tag_;
@@ -40,8 +48,8 @@ class Number : public Token {
 
 class Word : public Token {
  public:
-  Word(int tag, std::string lexeme):
-    Token(tag), lexeme_(lexeme) {
+  Word(std::string lexeme):
+    Token(IDENTIFIER), lexeme_(lexeme) {
   }
   
   std::string to_string() override {
@@ -52,16 +60,14 @@ class Word : public Token {
 };
 
 // ----------------------------------------------------------------------------
+
 class identifier_pattern {
  public:
-  identifier_pattern(const std::initializer_list<std::string>& patterns) {
-    for(auto& item : patterns) 
-      patterns_.emplace_back(item);
-  }
-
-  bool match(std::string str);
+  identifier_pattern() = default;
+  void insert_pattern(Tag tag, const std::initializer_list<std::string>& desc);
+  bool match(std::shared_ptr<Token> token);
  private:
-  std::vector<std::regex> patterns_;
+  std::map<Tag, std::vector<std::regex>> patterns_;
 };
 
 } // namespace jcc

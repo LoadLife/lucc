@@ -29,11 +29,11 @@ int main(int argc, char** argv) {
   }
   spdlog::info("Start to get jcc instance");
   auto jcc = Jcc::GetJcc(); 
-  jcc->SetIncludePathes(include_pathes);
-  Token* a = new Number(3.14);
-  Token* b = new Number(2);
+  //jcc->SetIncludePathes(include_pathes);
+  identifier_pattern pattern;
+  pattern.insert_pattern(Tag::IDENTIFIER, {"[A-Za-z_]([A-Za-z_]|[0-9])*"});
+  auto test_token = std::make_shared<Word>("_heLlo_9");
+  std::cout << pattern.match(test_token);
 
-  std::cout << a->to_string() << std::endl;
-  std::cout << b->to_string() << std::endl;
   return 0;
 }
