@@ -13,21 +13,21 @@ std::string Number::to_string() {
 
 // ----------------------------------------------------------------------------
 
-void identifier_pattern::insert_pattern(Tag tag, const std::initializer_list<std::string>& desc) {
+void identifier_pattern::insert_pattern(TokenKind kind, const std::initializer_list<std::string>& desc) {
   std::vector<std::regex> tmp;
   for(auto i : desc) {
     tmp.emplace_back(i); 
   }
-  patterns_[tag] = std::move(tmp);
+  pattern_map_[kind] = std::move(tmp);
 }
 
 bool identifier_pattern::match(std::shared_ptr<Token> token) {
-  auto tag = token->get_token_tag();
-  if(!patterns_.count(tag)) {
-    spdlog::critical("invalid tag for token {0}", token->to_string());
+  auto kind = token->get_token_kind();
+  if(!pattern_map_.count(kind)) {
+    spdlog::critical("invalid kind for token {0}", token->to_string());
     exit(0);
   }
-  const auto& pattern =  patterns_.at(tag);
+  const auto& pattern =  pattern_map_.at(kind);
   for(auto& i : pattern) {
     if(std::regex_match(token->to_string(), i)){
       spdlog::info("success match \"{}\"", token->to_string()); 

@@ -13,7 +13,7 @@
 
 namespace jcc {
 // use to mark keywords
-enum Tag : unsigned short {
+enum TokenKind : unsigned short {
   NUMBER = 0,
   IDENTIFIER,
   KEYWORD,  
@@ -21,25 +21,19 @@ enum Tag : unsigned short {
 
 class Token {
  public:
-  Token(int tag) : tag_(tag) {
-  }
+  Token(int kind) : kind_(kind) {}
 
-  virtual std::string to_string() {
-    return std::to_string(tag_);
-  }
+  virtual std::string to_string() { return std::to_string(kind_); }
 
-  Tag get_token_tag() {
-    return static_cast<Tag>(tag_);
-  }
+  TokenKind get_token_kind() { return static_cast<TokenKind>(kind_); }
 
-  const int tag_;
+  const int kind_;
 };
 
 class Number : public Token {
  public:
-  Number(std::variant<int, double> value):
-    Token(static_cast<int>(Tag::NUMBER)),
-    value_(std::move(value)){
+  Number(std::variant<int, double> value): 
+    Token(static_cast<int>(TokenKind::NUMBER)), value_(std::move(value)) {
   }
 
   std::string to_string() override;  
@@ -48,13 +42,9 @@ class Number : public Token {
 
 class Word : public Token {
  public:
-  Word(std::string lexeme):
-    Token(IDENTIFIER), lexeme_(lexeme) {
-  }
+  Word(std::string lexeme) : Token(IDENTIFIER), lexeme_(lexeme) {}
   
-  std::string to_string() override {
-    return lexeme_;
-  }
+  std::string to_string() override { return lexeme_; }
 
   std::string lexeme_;
 };
@@ -64,11 +54,18 @@ class Word : public Token {
 class identifier_pattern {
  public:
   identifier_pattern() = default;
-  void insert_pattern(Tag tag, const std::initializer_list<std::string>& desc);
+
+  void insert_pattern(TokenKind kind, const std::initializer_list<std::string>& desc);
+
   bool match(std::shared_ptr<Token> token);
  private:
-  std::map<Tag, std::vector<std::regex>> patterns_;
+
+  std::map<TokenKind, std::vector<std::regex>> pattern_map_;
 };
+
+// ----------------------------------------------------------------------------
+
 
 } // namespace jcc
 #endif
+
