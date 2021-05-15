@@ -10,9 +10,9 @@ namespace fs = std::filesystem;
 
 class dir_info {
  public:
-  dir_info(std::string path) : dir_path_(fs::path(path)), dir_entry(dir_path_) {}
+  dir_info(std::string path) : dir_path_(fs::path(path)), dir_entry_(dir_path_) {}
 
-  bool dir_exist() { return dir_entry.exists(); } 
+  bool dir_exist() { return dir_entry_.exists(); } 
 
   std::vector<fs::path> dir_file_pathes() {
     std::vector<fs::path> tmp;
@@ -27,7 +27,7 @@ class dir_info {
   }
  private:
   fs::path dir_path_;
-  fs::directory_entry dir_entry;
+  fs::directory_entry dir_entry_;
 };
 
 inline void readFileToString(const std::string path, std::string& dst) {
