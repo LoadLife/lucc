@@ -17,11 +17,11 @@ class dir_info {
   std::vector<fs::path> dir_file_pathes() {
     std::vector<fs::path> tmp;
     if(!dir_exist()) {
-      spdlog::info("do exit this path");
+      spdlog::critical("don't exist this folder {}", dir_entry_.path().string());
       return tmp;
     }
     for(const auto &file : fs::directory_iterator(dir_path_)) {
-      tmp.push_back(file);
+      tmp.push_back(file.path());
     } 
     return tmp;
   }
