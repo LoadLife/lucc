@@ -1,17 +1,8 @@
 #include <stdio.h>
+#include <regex>
 #include "internal/scan.h"
 
 namespace jcc {
-
-std::string Number::to_string() {
-  std::string str;
-  std::visit( [&str](auto& value) {
-       str = std::to_string(value);
-    }, value_);
-  return str;
-}
-
-// ----------------------------------------------------------------------------
 
 void identifier_pattern::insert_pattern(TokenKind kind, const std::initializer_list<std::string>& desc) {
   std::vector<std::regex> tmp;

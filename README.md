@@ -1,3 +1,3 @@
 ### a compiler attempt  
 ------------------
-emmmm, don't have a explicit aim
+aim: create a compiler front-end for parsing a subset of 'C' to three-address code

@@ -11,11 +11,12 @@
 #include "j_utility.h"
 
 #define version_info  "  jcc version '0.0.1'\n\
-  a toy compiler\n\
-  COPYRIGHT@JUN"
+                         a toy compiler\n\
+                         COPYRIGHT@JUN "
 using namespace jcc;
-int main(int argc, char** argv) {
 
+
+int main(int argc, char** argv) {
   // parse args 
   CLI::App app{"the noob's compiler jcc"};
   bool version{false};

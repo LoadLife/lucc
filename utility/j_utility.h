@@ -30,6 +30,8 @@ class dir_info {
   fs::directory_entry dir_entry_;
 };
 
+// ----------------------------------------------------------------------------
+
 inline void readFileToString(const std::string path, std::string& dst) {
   std::ifstream file_in(path, std::ios::in);
   if(!file_in) {
