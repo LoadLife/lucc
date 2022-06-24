@@ -17,7 +17,7 @@ ExternalProject_Add(SPDLOG
 
 ExternalProject_Get_Property(SPDLOG BINARY_DIR)
 if(${SPD_BUILD_TYPE} MATCHES "Debug")
-  set(SPDLOG_PATH ${BINARY_DIR}/${CMAKE_CFG_INTDIR}/spdlogd.lib)
+  set(SPDLOG_PATH ${BINARY_DIR}/${CMAKE_CFG_INTDIR}/libspdlog.a)
 else()
-  set(SPDLOG_PATH ${BINARY_DIR}/${CMAKE_CFG_INTDIR}/spdlog.lib)
+  set(SPDLOG_PATH ${BINARY_DIR}/${CMAKE_CFG_INTDIR}/libspdlog.a)
 endif()

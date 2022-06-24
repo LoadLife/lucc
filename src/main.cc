@@ -7,14 +7,15 @@
 #include "CLI/Formatter.hpp"
 #include "CLI/Config.hpp"
 #include "spdlog/spdlog.h"
-#include "internal/scan.h"
+#include "internal/scanner.h"
 #include "j_utility.h"
 
-#define version_info  "  jcc version '0.0.1'\n\
-                         a toy compiler\n\
-                         COPYRIGHT@JUN "
-using namespace jcc;
+#define version_info      \
+  "Version 'jcc_0.0.1'\n" \
+  "a toy compiler\n"      \
+  "COPYRIGHT@JUN "
 
+using namespace jcc;
 
 int main(int argc, char** argv) {
   // parse args 
@@ -30,13 +31,10 @@ int main(int argc, char** argv) {
     exit(0);
   }
   spdlog::info("Start to get jcc instance");
-  auto jcc = Jcc::GetJcc(); 
+  auto jcc = Jcc::get_jcc(); 
   //jcc->SetIncludePathes(include_pathes);
-  identifier_pattern pattern;
-  pattern.insert_pattern(TokenKind::IDENTIFIER, {"[A-Za-z_]([A-Za-z_]|[0-9])*"});
-  auto test_token = std::make_shared<Word>("_heLlo_9");
 
-  dir_info dir("C:\\Users\\DELL\\Desktop\\Lu_Compiler\\build\\Debug"); 
+  dir_info dir("/"); 
   dir.dir_file_pathes();
   return 0;
 }

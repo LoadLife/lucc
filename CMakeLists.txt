@@ -23,5 +23,6 @@ target_include_directories(jcc PRIVATE src
                                PRIVATE utility
                                PRIVATE ${PROJECT_BINARY_DIR}/CLI11-src/include
                                PRIVATE ${PROJECT_BINARY_DIR}/spdlog-src/include)
+message(${CMAKE_BUILD_TYPE})
 target_link_libraries(jcc PRIVATE platform 
                           PRIVATE ${SPDLOG_PATH})
