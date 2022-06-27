@@ -47,9 +47,4 @@ bool Scanner::scan_test(const unsigned char& c) {
   return false;
 }
 
-void Scanner::scan() {
-  auto c = scan_next();
-
-}
-
 } //namespace jcc

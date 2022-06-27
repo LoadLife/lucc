@@ -6,7 +6,6 @@
 #include "CLI/App.hpp"
 #include "CLI/Formatter.hpp"
 #include "CLI/Config.hpp"
-#include "spdlog/spdlog.h"
 #include "internal/scanner.h"
 #include "j_utility.h"
 
@@ -30,11 +29,11 @@ int main(int argc, char** argv) {
     std::cout << version_info << std::endl;
     exit(0);
   }
-  spdlog::info("Start to get jcc instance");
   auto jcc = Jcc::get_jcc(); 
   //jcc->SetIncludePathes(include_pathes);
-
+  PUSH_WS();
   dir_info dir("/"); 
   dir.dir_file_pathes();
+  POP_WS();
   return 0;
 }

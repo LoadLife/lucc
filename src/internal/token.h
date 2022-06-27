@@ -4,10 +4,9 @@
 #include <variant>
 #include <list>
 #include <memory>
+#include <climits>
 
 namespace jcc {
-
-using TokenList = std::list<Token>;
 
 struct Location {
   const std::string file_name_;
@@ -207,6 +206,5 @@ class TokenSequence {
 };
 
 }
-
 
 #endif
