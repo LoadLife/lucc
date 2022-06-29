@@ -11,7 +11,7 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace jcc {
-
+// used for log's withe space indentation
 extern thread_local int ws;
 class Logger {
   public:
@@ -20,8 +20,8 @@ class Logger {
       return &logger;
     }
     template<typename... Ts>
-    void debug_log(const Ts&... args) {
-      logger_instance_->info(args...); 
+    void debug_log(Ts&&... args) {
+      logger_instance_->info(std::forward<Ts>(args)...); 
     }
 
     void push_white_space() {
@@ -34,7 +34,7 @@ class Logger {
     }
 
     void pop_white_space() {
-      if(ws<4) 
+      if (ws < 4) 
         return;
       ws -=4;
       std::string ws_str(ws, ' '); 
@@ -95,7 +95,6 @@ class dir_info {
   fs::path dir_path_;
   fs::directory_entry dir_entry_;
 };
-
 
 inline void readFileToString(const std::string path, std::string& dst) {
   std::ifstream file_in(path, std::ios::in);

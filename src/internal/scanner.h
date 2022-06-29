@@ -6,7 +6,6 @@
 #include <vector>
 #include "token.h"
 #include "j_utility.h"
-#include "spdlog/spdlog.h"
 
 namespace jcc {
 

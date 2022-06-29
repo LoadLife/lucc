@@ -17,21 +17,21 @@
 using namespace jcc;
 
 int main(int argc, char** argv) {
+  PUSH_WS();
   // parse args 
   CLI::App app{"the noob's compiler jcc"};
   bool version{false};
-  app.add_flag("-v, --v", version, "Version description")->ignore_case();
   std::vector<std::string> include_pathes;
+  app.add_flag("-v, --v", version, "Version description")->ignore_case();
   app.add_option("-I", include_pathes, "Source files path");
   CLI11_PARSE(app, argc, argv);
 
   if(version) {
     std::cout << version_info << std::endl;
+    POP_WS();
     exit(0);
   }
   auto jcc = Jcc::get_jcc(); 
-  //jcc->SetIncludePathes(include_pathes);
-  PUSH_WS();
   dir_info dir("/"); 
   dir.dir_file_pathes();
   POP_WS();
