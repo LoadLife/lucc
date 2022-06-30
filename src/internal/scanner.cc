@@ -6,7 +6,37 @@ namespace jcc {
 
 void Scanner::scan() {
   auto c = scan_next();
+  if (c == ' ' || c == '\n') {
+    cur_ws_ += 1;
+    return;
+  } 
 
+  switch (c) {
+    case '+':
+      cur_token_str_ += '+';
+      if (scan_try('+')) {
+        cur_token_str_ += '+';
+        LOG_INFO("token_str: {}", cur_token_str_);
+      } else {
+        LOG_INFO("token_str: {}", cur_token_str_);
+      }
+      cur_token_str_ = "";
+      cur_ws_ = 0;
+      break;
+    case '-':
+      cur_token_str_ += '-';
+      if (scan_try('-')) {
+        cur_token_str_ += '+';
+        LOG_INFO("token_str: {}", cur_token_str_);
+      } else {
+        LOG_INFO("token_str: {}", cur_token_str_);
+      }
+      cur_token_str_ = "";
+      cur_ws_ = 0;
+      break;
+    default:
+      break;
+  }
 }
 
 unsigned char Scanner::scan_peek() {

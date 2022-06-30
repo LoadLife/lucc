@@ -27,7 +27,9 @@ private:
 
   std::string file_name_;
   Location cur_loc_;
-  std::string text_;
+  std::string cur_token_str_ = "";
+  unsigned int cur_ws_ = 0;
+  std::string text_ = "";
   std::string::const_iterator cur_text_iter_;  
 };
 

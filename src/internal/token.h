@@ -4,7 +4,9 @@
 #include <variant>
 #include <list>
 #include <memory>
+#include <unordered_map>
 #include <climits>
+#include <iostream>
 
 namespace jcc {
 
@@ -13,6 +15,9 @@ struct Location {
   unsigned row_;
   unsigned col_;
   std::string::const_iterator line_begin_;
+  void print() {
+    std::cout << "\"" << file_name_ << "\"" << " " << row_ << ", " << col_ << std::endl;
+  }
 };
 
 enum TokenKind : unsigned short {
@@ -169,6 +174,8 @@ enum TokenKind : unsigned short {
   END,
   NOTOK = USHRT_MAX
 };
+
+extern std::unordered_map<std::string, TokenKind>  Str_Keywor_Map;
 
 class Token {
  public:

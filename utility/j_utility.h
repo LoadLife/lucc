@@ -13,6 +13,7 @@
 namespace jcc {
 // used for log's withe space indentation
 extern thread_local int ws;
+
 class Logger {
   public:
     static Logger* get_instance() {

@@ -31,9 +31,11 @@ int main(int argc, char** argv) {
     POP_WS();
     exit(0);
   }
-  auto jcc = Jcc::get_jcc(); 
-  dir_info dir("/"); 
-  dir.dir_file_pathes();
+  //[remove] tmp test code
+  Scanner scanner("/home/jerry/Project/Lu_Compiler/test/test.cc");
+  for(auto i = 0; i != 50; i++) {
+    scanner.scan();
+  }
   POP_WS();
   return 0;
 }

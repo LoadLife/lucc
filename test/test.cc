@@ -1,4 +1,7 @@
 
-int main() {
-  return 0;
+  int main() {
+  int a= 3;
+
+  a ++;
+  return a;
 }
