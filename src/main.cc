@@ -33,9 +33,9 @@ int main(int argc, char** argv) {
   }
   //[remove] tmp test code
   Scanner scanner("/home/jerry/Project/Lu_Compiler/test/test.cc");
-  for(auto i = 0; i != 50; i++) {
-    scanner.scan();
-  }
+  while (scanner.scan()->kind_ != END)
+  {}
+  
   POP_WS();
   return 0;
 }

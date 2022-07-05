@@ -175,13 +175,15 @@ enum TokenKind : unsigned short {
   NOTOK = USHRT_MAX
 };
 
-extern std::unordered_map<std::string, TokenKind>  Str_Keywor_Map;
+extern std::unordered_map<std::string, TokenKind>  Str_Keyword_Map;
 
 class Token {
  public:
-  Token(int kind) : kind_(kind) {}
+  Token() = default;
+  Token(unsigned short kind, Location loc, int ws, std::string token_str) 
+  : kind_(kind), loc_(loc), ws_(ws), token_str_(token_str)
+  {}
 
-  TokenKind get_token_kind() const { return static_cast<TokenKind>(kind_); }
   std::string get_token_str() const { return token_str_; }
 
   bool is_punctuator() const { return LPAR <= kind_ && kind_ <= ELLIPSIS; }
@@ -194,13 +196,12 @@ class Token {
   bool is_decl() const { return CONST <= kind_ && kind_ <= REGISTER; }
 
 
-  const int kind_;
+  unsigned short kind_;
   Location loc_;
-
+  int ws_ = 0;
+  std::string token_str_ = "";
  private:
-  const std::string token_str_;
 };
-
 // ----------------------------------------------------------------
 
 class TokenSequence {

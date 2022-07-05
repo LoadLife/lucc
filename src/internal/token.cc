@@ -9,7 +9,7 @@ namespace jcc {
 
     {"void", VOID},
     {"char", CHAR},
-    {"short",SHORT},
+    {"short", SHORT},
     {"int", INT},
     {"long", LONG},
     {"float", FLOAT},
@@ -21,6 +21,30 @@ namespace jcc {
     {"struct", STRUCT},
     {"union", UNION},
     {"enum", ENUM},
+
+    {"+", ADD},
+    {"++", INC},
+    {"-", SUB},
+    {"--", DEC},
+    {"*", MUL},
+    {"/", DIV},
+    {"%", MOD},
+    {"+=", ADD_ASSIGN},
+    {"-=", SUB_ASSIGN},
+    {"*=", MUL_ASSIGN},
+    {"/=", DIV_ASSIGN},
+    {"%=", MOD_ASSIGN},
+    {"<<=", LEFT_ASSIGN},
+    {">>=", RIGHT_ASSIGN},
+    {"&=", AND_ASSIGN},
+    {"^=", XOR_ASSIGN},
+    {"|=", OR_ASSIGN},
+
+    {"(", LPAR},
+    {")", RPAR},
+    {"{", LBRACE},
+    {"}", RBRACE},
+    {";", SEMI}   
 
     //{"",},
   };

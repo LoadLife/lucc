@@ -1,41 +1,72 @@
-#include <stdio.h>
-#include <regex>
 #include "internal/scanner.h"
 
 namespace jcc {
 
-void Scanner::scan() {
-  auto c = scan_next();
-  if (c == ' ' || c == '\n') {
+std::unique_ptr<Token> Scanner::scan() {
+  // record token info
+  cur_ws_ = 0;
+  cur_token_str_ = "";
+  while (scan_try(' '))
     cur_ws_ += 1;
-    return;
-  } 
+  auto token_loc = cur_loc_; 
+  //token_loc.print();
 
+  auto c = scan_next();
+  if (c == '\n') 
+    return std::make_unique<Token>(NEW_LINE, token_loc, cur_ws_, cur_token_str_);
+
+  cur_token_str_ += c;
   switch (c) {
-    case '+':
+  case '+':
+    if (scan_try('+')) {
       cur_token_str_ += '+';
-      if (scan_try('+')) {
-        cur_token_str_ += '+';
-        LOG_INFO("token_str: {}", cur_token_str_);
-      } else {
-        LOG_INFO("token_str: {}", cur_token_str_);
-      }
-      cur_token_str_ = "";
-      cur_ws_ = 0;
-      break;
-    case '-':
+    } else if (scan_try('=')){
+      cur_token_str_ += '=';
+    }
+    LOG_INFO("token_str: {}", cur_token_str_);
+    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+  case '-':
+    if (scan_try('-')) {
       cur_token_str_ += '-';
-      if (scan_try('-')) {
-        cur_token_str_ += '+';
-        LOG_INFO("token_str: {}", cur_token_str_);
-      } else {
-        LOG_INFO("token_str: {}", cur_token_str_);
-      }
-      cur_token_str_ = "";
-      cur_ws_ = 0;
-      break;
-    default:
-      break;
+    } else if (scan_try('>')) {
+      cur_token_str_ += '>';
+    } else if (scan_try('=')) {
+      cur_token_str_ += '=';
+    }
+    LOG_INFO("token_str: {}", cur_token_str_);
+    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+  case '(':
+    LOG_INFO("token_str: {}", cur_token_str_);
+    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+  case ')':
+    LOG_INFO("token_str: {}", cur_token_str_);
+    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+  case '{':
+    LOG_INFO("token_str: {}", cur_token_str_);
+    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+  case '}':
+    LOG_INFO("token_str: {}", cur_token_str_);
+    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+  case ';':
+    LOG_INFO("token_str: {}", cur_token_str_);
+    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+  case 'a' ... 'z':
+  case 'A' ... 'Z':
+  case '_': case '$':
+    parse_identifier();
+    return std::make_unique<Token>(IDENTIFIER, token_loc, cur_ws_, cur_token_str_);
+  case '0'...'9':
+    parse_num();
+    return std::make_unique<Token>(IDENTIFIER, token_loc, cur_ws_, cur_token_str_);
+  case '=':
+    LOG_INFO("token_str: {}", cur_token_str_);
+    return std::make_unique<Token>(EQUAL, token_loc, cur_ws_, cur_token_str_);  
+  case '\0':
+    return std::make_unique<Token>(END, token_loc, cur_ws_, cur_token_str_);
+    LOG_INFO("token_str: {}", "file end");
+    
+  default:
+    return std::make_unique<Token>();
   }
 }
 
@@ -75,6 +106,27 @@ bool Scanner::scan_test(const unsigned char& c) {
   if (scan_peek() == c) 
     return true;
   return false;
+}
+
+void Scanner::parse_identifier() {
+  auto c = scan_peek();
+  while (std::isalnum(c) || c == '_' || c == '$')
+  {
+    cur_token_str_ += c;
+    scan_next();
+    c = scan_peek(); 
+  }
+  LOG_INFO("token_str: {}", cur_token_str_);
+}
+
+void Scanner::parse_num() {
+  auto c = scan_peek();
+  while (std::isalnum(c)) {
+    cur_token_str_ += c;
+    scan_next();
+    c = scan_peek();
+  }
+  LOG_INFO("token_str: {}", cur_token_str_);
 }
 
 } //namespace jcc
