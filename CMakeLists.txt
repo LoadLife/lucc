@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 project(Lu_Compiler)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake")
-include(CLI11)
-include(SPDLOG)
 
 # identify the platform
 message(STATUS "operation system is ${CMAKE_SYSTEM_NAME}")
@@ -21,11 +18,8 @@ file(GLOB SOURCE_FILES "src/*.cc"
                        "utility/*.cc")
                 
 add_executable(jcc ${SOURCE_FILES})
-add_dependencies(jcc CLI11)
-add_dependencies(jcc SPDLOG)
 target_include_directories(jcc PRIVATE src
                                PRIVATE utility
-                               PRIVATE ${PROJECT_BINARY_DIR}/CLI11-src/include
-                               PRIVATE ${PROJECT_BINARY_DIR}/spdlog-src/include)
+                               PRIVATE third-party)
 target_link_libraries(jcc PRIVATE platform 
                           PRIVATE ${SPDLOG_PATH})

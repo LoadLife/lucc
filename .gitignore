@@ -1,5 +1,6 @@
 build/
 .vscode/
+.cache/
 !.vscode/launch.json
 !.vscode/setting.json
 Lu_Compiler.udb

@@ -3,9 +3,7 @@
 #include <string>
 #include "file_operation.h"
 #include "jcc.h"
-#include "CLI/App.hpp"
-#include "CLI/Formatter.hpp"
-#include "CLI/Config.hpp"
+#include "CLI11/CLI11.hpp"
 #include "internal/scanner.h"
 #include "j_utility.h"
 
@@ -32,7 +30,7 @@ int main(int argc, char** argv) {
     exit(0);
   }
   //[remove] tmp test code
-  Scanner scanner("/home/jerry/Project/Lu_Compiler/test/test.cc");
+  Scanner scanner("/home/jerry/Project/lucc/test/test.cc");
   while (scanner.scan()->kind_ != END)
   {}
   
