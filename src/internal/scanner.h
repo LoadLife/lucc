@@ -4,31 +4,31 @@
 #include <string>
 #include <vector>
 #include "token.h"
-#include "j_utility.h"
+#include "file_sys.h"
 
-namespace jcc {
+namespace lucc {
 
 class Scanner {
 public:
   explicit Scanner(const std::string& file_name)
     :file_name_(file_name), cur_loc_{file_name, 1, 1} 
   {
-    readFileToString(file_name, text_);
+    ReadFileToString(file_name, text_);
     // mark file end
     text_.push_back('\0'); 
     cur_text_iter_ = text_.begin();
   }
 
-  std::unique_ptr<Token> scan();
+  std::unique_ptr<Token> Scan();
 
 private:
-  unsigned char scan_peek();  
-  unsigned char scan_next();
-  void put_back();
-  bool scan_try(const unsigned char& c);
-  bool scan_test(const unsigned char& c);
-  void parse_identifier();
-  void parse_num();
+  unsigned char ScanPeek();  
+  unsigned char ScanNext();
+  void PutBack();
+  bool ScanTry(const unsigned char& c);
+  bool ScanTest(const unsigned char& c);
+  void ParseIdentifier();
+  void ParseNum();
 
   //Token tok_{0};
   int cur_ws_;
@@ -40,6 +40,6 @@ private:
   std::string::const_iterator cur_text_iter_;  
 };
 
-} // namespace jcc
+} // namespace lucc
 #endif
 

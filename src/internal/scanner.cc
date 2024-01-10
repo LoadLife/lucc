@@ -1,62 +1,62 @@
 #include "internal/scanner.h"
 
-namespace jcc {
+namespace lucc {
 
-std::unique_ptr<Token> Scanner::scan() {
+std::unique_ptr<Token> Scanner::Scan() {
   // record token info
   cur_ws_ = 0;
   cur_token_str_ = "";
-  while (scan_try(' '))
+  while (ScanTry(' '))
     cur_ws_ += 1;
   auto token_loc = cur_loc_; 
   //token_loc.print();
 
-  auto c = scan_next();
+  auto c = ScanNext();
   if (c == '\n') 
     return std::make_unique<Token>(NEW_LINE, token_loc, cur_ws_, cur_token_str_);
 
   cur_token_str_ += c;
   switch (c) {
   case '+':
-    if (scan_try('+')) {
+    if (ScanTry('+')) {
       cur_token_str_ += '+';
-    } else if (scan_try('=')){
+    } else if (ScanTry('=')){
       cur_token_str_ += '=';
     }
     LOG_INFO("token_str: {}", cur_token_str_);
-    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+    return std::make_unique<Token>(str_keyword_map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
   case '-':
-    if (scan_try('-')) {
+    if (ScanTry('-')) {
       cur_token_str_ += '-';
-    } else if (scan_try('>')) {
+    } else if (ScanTry('>')) {
       cur_token_str_ += '>';
-    } else if (scan_try('=')) {
+    } else if (ScanTry('=')) {
       cur_token_str_ += '=';
     }
     LOG_INFO("token_str: {}", cur_token_str_);
-    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+    return std::make_unique<Token>(str_keyword_map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
   case '(':
     LOG_INFO("token_str: {}", cur_token_str_);
-    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+    return std::make_unique<Token>(str_keyword_map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
   case ')':
     LOG_INFO("token_str: {}", cur_token_str_);
-    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+    return std::make_unique<Token>(str_keyword_map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
   case '{':
     LOG_INFO("token_str: {}", cur_token_str_);
-    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+    return std::make_unique<Token>(str_keyword_map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
   case '}':
     LOG_INFO("token_str: {}", cur_token_str_);
-    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+    return std::make_unique<Token>(str_keyword_map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
   case ';':
     LOG_INFO("token_str: {}", cur_token_str_);
-    return std::make_unique<Token>(Str_Keyword_Map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
+    return std::make_unique<Token>(str_keyword_map.at(cur_token_str_), token_loc, cur_ws_, cur_token_str_);
   case 'a' ... 'z':
   case 'A' ... 'Z':
   case '_': case '$':
-    parse_identifier();
+    ParseIdentifier();
     return std::make_unique<Token>(IDENTIFIER, token_loc, cur_ws_, cur_token_str_);
   case '0'...'9':
-    parse_num();
+    ParseNum();
     return std::make_unique<Token>(IDENTIFIER, token_loc, cur_ws_, cur_token_str_);
   case '=':
     LOG_INFO("token_str: {}", cur_token_str_);
@@ -70,63 +70,63 @@ std::unique_ptr<Token> Scanner::scan() {
   }
 }
 
-unsigned char Scanner::scan_peek() {
+unsigned char Scanner::ScanPeek() {
   if (*cur_text_iter_ == '\\' && *(cur_text_iter_ + 1) == '\n') {
-    cur_loc_.col_ = 1;
-    cur_loc_.row_ += 1;
+    cur_loc_.col = 1;
+    cur_loc_.row += 1;
     cur_text_iter_ += 2;
-    cur_loc_.line_begin_ = cur_text_iter_;
-    return scan_peek();
+    cur_loc_.line_begin = cur_text_iter_;
+    return ScanPeek();
   }
   return *cur_text_iter_;
 }
 
-unsigned char Scanner::scan_next() {
-  auto ret = scan_peek();
+unsigned char Scanner::ScanNext() {
+  auto ret = ScanPeek();
   cur_text_iter_ += 1;
   if (ret == '\n') {
-    cur_loc_.col_ = 1;
-    cur_loc_.row_ += 1;
-    cur_loc_.line_begin_ = cur_text_iter_;
+    cur_loc_.col = 1;
+    cur_loc_.row += 1;
+    cur_loc_.line_begin = cur_text_iter_;
   } else {
-    cur_loc_.col_ += 1;
+    cur_loc_.col += 1;
   }
   return ret;
 }
 
-bool Scanner::scan_try(const unsigned char& c) {
-  if (scan_peek() == c) {
-    scan_next();
+bool Scanner::ScanTry(const unsigned char& c) {
+  if (ScanPeek() == c) {
+    ScanNext();
     return true;
   }
   return false;
 }
 
-bool Scanner::scan_test(const unsigned char& c) {
-  if (scan_peek() == c) 
+bool Scanner::ScanTest(const unsigned char& c) {
+  if (ScanPeek() == c) 
     return true;
   return false;
 }
 
-void Scanner::parse_identifier() {
-  auto c = scan_peek();
+void Scanner::ParseIdentifier() {
+  auto c = ScanPeek();
   while (std::isalnum(c) || c == '_' || c == '$')
   {
     cur_token_str_ += c;
-    scan_next();
-    c = scan_peek(); 
+    ScanNext();
+    c = ScanPeek(); 
   }
   LOG_INFO("token_str: {}", cur_token_str_);
 }
 
-void Scanner::parse_num() {
-  auto c = scan_peek();
+void Scanner::ParseNum() {
+  auto c = ScanPeek();
   while (std::isalnum(c)) {
     cur_token_str_ += c;
-    scan_next();
-    c = scan_peek();
+    ScanNext();
+    c = ScanPeek();
   }
   LOG_INFO("token_str: {}", cur_token_str_);
 }
 
-} //namespace jcc
+} //namespace lucc

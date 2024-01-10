@@ -1,23 +1,22 @@
 #include <iostream>
 #include <regex>
 #include <string>
-#include "file_operation.h"
-#include "jcc.h"
+#include "lucc.h"
 #include "CLI11/CLI11.hpp"
 #include "internal/scanner.h"
-#include "j_utility.h"
+#include "logger.h"
 
 #define version_info      \
-  "Version 'jcc_0.0.1'\n" \
+  "Version 'lucc_0.0.1'\n" \
   "a toy compiler\n"      \
   "COPYRIGHT@JUN "
 
-using namespace jcc;
+using namespace lucc;
 
 int main(int argc, char** argv) {
   PUSH_WS();
   // parse args 
-  CLI::App app{"the noob's compiler jcc"};
+  CLI::App app{"<the noob's compiler lucc>"};
   bool version{false};
   std::vector<std::string> include_pathes;
   app.add_flag("-v, --v", version, "Version description")->ignore_case();
@@ -31,7 +30,7 @@ int main(int argc, char** argv) {
   }
   //[remove] tmp test code
   Scanner scanner("/home/jerry/Project/lucc/test/test.cc");
-  while (scanner.scan()->kind_ != END)
+  while (scanner.Scan()->kind_ != END)
   {}
   
   POP_WS();

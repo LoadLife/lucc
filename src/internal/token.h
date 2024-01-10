@@ -1,22 +1,23 @@
 #ifndef TOKEN_H_
 #define TOKEN_H_
-#include <string>
-#include <variant>
-#include <list>
-#include <memory>
-#include <unordered_map>
 #include <climits>
 #include <iostream>
+#include <list>
+#include <memory>
+#include <string>
+#include <unordered_map>
+#include <variant>
 
-namespace jcc {
+namespace lucc {
 
 struct Location {
-  const std::string file_name_;
-  unsigned row_;
-  unsigned col_;
-  std::string::const_iterator line_begin_;
-  void print() {
-    std::cout << "\"" << file_name_ << "\"" << " " << row_ << ", " << col_ << std::endl;
+  const std::string file_name;
+  unsigned row;
+  unsigned col;
+  std::string::const_iterator line_begin;
+  void Print() {
+    std::cout << "\"" << file_name << "\""
+              << " " << row << ", " << col << std::endl;
   }
 };
 
@@ -76,14 +77,14 @@ enum TokenKind : unsigned short {
   // Punctuators end
 
   // KEYWORD BEGIN
-    // TYPE QUALIFIER BEGIN
+  // TYPE QUALIFIER BEGIN
   CONST,
   RESTRICT,
   VOLATILE,
   ATOMIC,
-    // TYPE QUALIFIER END
+  // TYPE QUALIFIER END
 
-    // TYPE SPECIFIER BEGIN
+  // TYPE SPECIFIER BEGIN
   VOID,
   CHAR,
   SHORT,
@@ -93,30 +94,30 @@ enum TokenKind : unsigned short {
   DOUBLE,
   SIGNED,
   UNSIGNED,
-  BOOL,		// _Bool
-  COMPLEX,	// _Complex
+  BOOL,    // _Bool
+  COMPLEX, // _Complex
   STRUCT,
   UNION,
   ENUM,
-    // TYPE SPECIFIER END
+  // TYPE SPECIFIER END
 
   ATTRIBUTE, // GNU extension __attribute__
-    // FUNCTION SPECIFIER BEGIN
+             // FUNCTION SPECIFIER BEGIN
   INLINE,
-  NORETURN,	// _Noreturn
-    // FUNCTION SPECIFIER END
+  NORETURN, // _Noreturn
+            // FUNCTION SPECIFIER END
 
   ALIGNAS, // _Alignas
 
   STATIC_ASSERT, // _Static_assert
-    // STORAGE CLASS SPECIFIER BEGIN
+                 // STORAGE CLASS SPECIFIER BEGIN
   TYPEDEF,
   EXTERN,
   STATIC,
-  THREAD,	// _Thread_local
+  THREAD, // _Thread_local
   AUTO,
   REGISTER,
-    // STORAGE CLASS SPECIFIER END
+  // STORAGE CLASS SPECIFIER END
   BREAK,
   CASE,
   CONTINUE,
@@ -130,8 +131,8 @@ enum TokenKind : unsigned short {
   SIZEOF,
   SWITCH,
   WHILE,
-  ALIGNOF, // _Alignof
-  GENERIC, // _Generic
+  ALIGNOF,   // _Alignof
+  GENERIC,   // _Generic
   IMAGINARY, // _Imaginary
   // KEYWORD END
 
@@ -175,44 +176,42 @@ enum TokenKind : unsigned short {
   NOTOK = USHRT_MAX
 };
 
-extern std::unordered_map<std::string, TokenKind>  Str_Keyword_Map;
+extern std::unordered_map<std::string, TokenKind> str_keyword_map;
 
 class Token {
- public:
+public:
   Token() = default;
-  Token(unsigned short kind, Location loc, int ws, std::string token_str) 
-  : kind_(kind), loc_(loc), ws_(ws), token_str_(token_str)
-  {}
+  Token(unsigned short kind, Location loc, int ws, std::string token_str)
+      : kind_(kind), loc_(loc), ws_(ws), token_str_(token_str) {}
 
   std::string get_token_str() const { return token_str_; }
 
-  bool is_punctuator() const { return LPAR <= kind_ && kind_ <= ELLIPSIS; }
-  bool is_key_word() const { return CONST <= kind_ && kind_ < IDENTIFIER; }
-  bool is_literal() const { return kind_ == LITERAL; }
-  bool is_constant() const { return CONSTANT <= kind_ && kind_ <= F_CONSTANT; }
-  bool is_identifier() const { return kind_ == IDENTIFIER; }
-  bool is_EOF() const { return kind_ == END; }
-  bool is_type_spec_qual() const { return CONST <= kind_ && kind_ <= ENUM; }
-  bool is_decl() const { return CONST <= kind_ && kind_ <= REGISTER; }
-
+  bool IsPunctuator() const { return LPAR <= kind_ && kind_ <= ELLIPSIS; }
+  bool IsKeyWord() const { return CONST <= kind_ && kind_ < IDENTIFIER; }
+  bool IsLiteral() const { return kind_ == LITERAL; }
+  bool IsConstant() const { return CONSTANT <= kind_ && kind_ <= F_CONSTANT; }
+  bool IsIdentifier() const { return kind_ == IDENTIFIER; }
+  bool IsEOF() const { return kind_ == END; }
+  bool IsTypeSpecQual() const { return CONST <= kind_ && kind_ <= ENUM; }
+  bool IsDecl() const { return CONST <= kind_ && kind_ <= REGISTER; }
 
   unsigned short kind_;
   Location loc_;
   int ws_ = 0;
   std::string token_str_ = "";
- private:
+
+private:
 };
 // ----------------------------------------------------------------
 
 class TokenSequence {
- public:
+public:
   explicit TokenSequence();
 
- private:
+private:
   std::list<std::unique_ptr<Token>> token_ptr_list_;
-
 };
 
-}
+} // namespace lucc
 
 #endif

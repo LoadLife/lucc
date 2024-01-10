@@ -1,7 +1,7 @@
 #include "token.h"
-namespace jcc {
+namespace lucc {
 
-  std::unordered_map<std::string, TokenKind> Str_Keyword_Map = {
+  std::unordered_map<std::string, TokenKind> str_keyword_map = {
     {"const", CONST},
     {"restrict", RESTRICT},
     {"volatile", VOLATILE},

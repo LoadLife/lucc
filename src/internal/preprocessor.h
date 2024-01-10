@@ -4,16 +4,16 @@
 #include <string>
 #include <vector>
 
-namespace jcc {
+namespace lucc {
 
-class Preprocessor {
+class PreProcessor {
  public:
-  explicit Preprocessor() {
+  explicit PreProcessor() {
   }
-  void add_include_path(std::string path);
+  void AddIncludePath(std::string path);
  private:
-  std::list<std::string> included_paths;
-  std::vector<std::string> src_files;
+  std::list<std::string> included_paths_;
+  std::vector<std::string> src_files_;
 }; 
 
 }

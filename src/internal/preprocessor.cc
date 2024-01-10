@@ -1,13 +1,13 @@
 #include "preprocessor.h"
 
-namespace jcc {
+namespace lucc {
 
-void Preprocessor::add_include_path(std::string path) {
+void PreProcessor::AddIncludePath(std::string path) {
   if (path.back() != '/') 
     path += '/';
   if (path.front() != '/')
     path = "./" + path;
-  included_paths.push_front(path);
+  included_paths_.push_front(path);
 }
 
 

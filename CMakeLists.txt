@@ -12,14 +12,11 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 configure_file(configure.h.in ${CMAKE_CURRENT_BINARY_DIR}/generate/configure.h)
 
-add_subdirectory(platform)
 file(GLOB SOURCE_FILES "src/*.cc"
                        "src/internal/*.cc"
-                       "utility/*.cc")
+                       "support/*.cc")
                 
-add_executable(jcc ${SOURCE_FILES})
-target_include_directories(jcc PRIVATE src
-                               PRIVATE utility
+add_executable(lucc ${SOURCE_FILES})
+target_include_directories(lucc PRIVATE src
+                               PRIVATE support
                                PRIVATE third-party)
-target_link_libraries(jcc PRIVATE platform 
-                          PRIVATE ${SPDLOG_PATH})
