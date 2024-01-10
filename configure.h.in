@@ -1,2 +1,0 @@
-#cmakedefine Win_ ${Win_}
-#cmakedefine Linux_ ${Linux_}
