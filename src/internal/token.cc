@@ -1,7 +1,7 @@
 #include "token.h"
 namespace lucc {
 
-  std::unordered_map<std::string, TokenKind> str_keyword_map = {
+std::unordered_map<std::string, TokenKind> str_keyword_map = {
     {"const", CONST},
     {"restrict", RESTRICT},
     {"volatile", VOLATILE},
@@ -44,9 +44,9 @@ namespace lucc {
     {")", RPAR},
     {"{", LBRACE},
     {"}", RBRACE},
-    {";", SEMI}   
+    {";", SEMI}
 
     //{"",},
-  };
+};
 
 }
